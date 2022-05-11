@@ -9,11 +9,13 @@ function appendMessage(msg) {
   window.scrollTo(0, document.body.scrollHeight);
 }
 
-
 const name = prompt('What is your name?')
 appendMessage('You joined')
 socket.emit('new-user', name)
 
+socket.on('new-user', name => {
+  appendMessage(`${name} joined`);
+});
 
 socket.on('chat-message', data => {
   appendMessage(`${data}`);  
@@ -21,10 +23,6 @@ socket.on('chat-message', data => {
 
 socket.on('user-connected', name => {
   appendMessage(`${name} connected`);
-});
-
-socket.on('new-user', name => {
-  appendMessage(`${name} joined`);
 });
 
 
